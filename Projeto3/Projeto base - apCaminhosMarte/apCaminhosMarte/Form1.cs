@@ -29,10 +29,6 @@ namespace apCaminhosMarte
         private void Form1_Load(object sender, EventArgs e)
         {
             arvore = new Arvore<Cidade>();
-        }
-
-        private void btnLerDados_Click(object sender, EventArgs e)
-        {
             if (dlgAbrir.ShowDialog() == DialogResult.OK)
             {
                 var arq = new StreamReader(dlgAbrir.FileName);
@@ -49,6 +45,12 @@ namespace apCaminhosMarte
                 lblAltura.Text = "Altura : " + Convert.ToString(
                                      arvore.Altura(ref balanceada));
                 chkBalanceada.Checked = balanceada;
+            }
+
+            foreach (Cidade ci in dadosCidade)
+            {
+                lsbOrigem.Items.Add($"{ci.IdCidade} - {ci.NomeCidade}");
+                lsbDestino.Items.Add($"{ci.IdCidade} - {ci.NomeCidade}");
             }
         }
 
