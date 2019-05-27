@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Text;
 
 namespace apCaminhosMarte
 {
@@ -16,11 +17,6 @@ namespace apCaminhosMarte
             InitializeComponent();
         }
 
-        private void TxtCaminhos_DoubleClick(object sender, EventArgs e)
-        {
-           
-        }
-
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Buscar caminhos entre cidades selecionadas");
@@ -31,7 +27,7 @@ namespace apCaminhosMarte
             arvore = new Arvore<Cidade>();
             if (dlgAbrir.ShowDialog() == DialogResult.OK)
             {
-                var arq = new StreamReader(dlgAbrir.FileName);
+                var arq = new StreamReader(dlgAbrir.FileName, Encoding.UTF7);
                 while (!arq.EndOfStream)
                     dadosCidade[qtosDados++] = new Cidade(arq.ReadLine());
                 arq.Close();
@@ -52,6 +48,14 @@ namespace apCaminhosMarte
                 lsbOrigem.Items.Add($"{ci.IdCidade} - {ci.NomeCidade}");
                 lsbDestino.Items.Add($"{ci.IdCidade} - {ci.NomeCidade}");
             }
+
+            pbMapa.Invalidate();
+            CriarGrafo();
+        }
+
+        void CriarGrafo()
+        {
+            int[,] matAdjacencias = new int[qtosDados, qtosDados];
         }
 
         void ParticionarVetorEmArvore(int inicio, int fim, ref NoArvore<Cidade> noAtual)
@@ -71,7 +75,7 @@ namespace apCaminhosMarte
             }
         }
 
-        private void desenhaArvore(bool primeiraVez, NoArvore<Cidade> raiz,
+        void DesenhaArvore(bool primeiraVez, NoArvore<Cidade> raiz,
                        int x, int y, double angulo, double incremento,
                        double comprimento, Graphics g)
         {
@@ -84,12 +88,12 @@ namespace apCaminhosMarte
                 if (primeiraVez)
                     yf = 25;
                 g.DrawLine(caneta, x, y, xf, yf);
-                // sleep(100);
-                desenhaArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
+
+                DesenhaArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
                                                  incremento * 0.60, comprimento * 0.8, g);
-                desenhaArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
+                DesenhaArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
                                                   incremento * 0.60, comprimento * 0.8, g);
-                // sleep(100);
+
                 SolidBrush preenchimento = new SolidBrush(Color.Blue);
                 g.FillEllipse(preenchimento, xf - 25, yf - 15, 40, 40);
                 g.DrawString(Convert.ToString(raiz.Info.IdCidade), new Font("Comic Sans", 12),
@@ -99,15 +103,38 @@ namespace apCaminhosMarte
             }
         }
 
-        private void pnlArvore_Paint(object sender, PaintEventArgs e)
+        void DesenharPontos(Graphics g)
+        {
+            SolidBrush preenchimento = new SolidBrush(Color.Black);
+            Pen caneta = new Pen(Color.Black);
+            int x = 0;
+            int y = 0;
+            for(int i = 0; i < qtosDados; i++)
+            {
+                Cidade ci = dadosCidade[i];
+                x = Convert.ToInt32((ci.CoordenadaX * pbMapa.Width) / 4096);
+                y = Convert.ToInt32((ci.CoordenadaY * pbMapa.Height) / 2048);
+                g.FillEllipse(preenchimento, x, y, 10, 10);
+                g.DrawString(ci.NomeCidade, new Font("Comic Sans", 10),
+                              new SolidBrush(Color.Black), x - 10, y + 15);
+            }
+        }
+
+        void pnlArvore_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            desenhaArvore(true, arvore.Raiz, (int)pnlArvore.Width / 2, 0, Math.PI / 2,
+            DesenhaArvore(true, arvore.Raiz, (int)pnlArvore.Width / 2, 0, Math.PI / 2,
                                  Math.PI / 2.5, 425, g);
             bool balanceada = false;
             lblAltura.Text = "Altura : " + Convert.ToString(
                            arvore.Altura(ref balanceada));
             chkBalanceada.Checked = balanceada;
+        }
+
+        private void pbMapa_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            DesenharPontos(g);
         }
     }
 }
