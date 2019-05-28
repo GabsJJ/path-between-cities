@@ -11,6 +11,7 @@ namespace apCaminhosMarte
         Cidade[] dadosCidade = new Cidade[10000];
         int qtosDados = 0;
         Arvore<Cidade> arvore;
+        Caminho[,] matAdjacencias;
 
         public Form1()
         {
@@ -19,9 +20,50 @@ namespace apCaminhosMarte
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Buscar caminhos entre cidades selecionadas");
+            //MessageBox.Show("Buscar caminhos entre cidades selecionadas");
+            BuscarCaminhos(lsbOrigem.SelectedIndex + 1, lsbDestino.SelectedIndex + 1);
         }
+        void BuscarCaminhos(int cdOrigem, int cdDestino)
+        {
+            if (cdOrigem != cdDestino)
+            {
+                bool achouTodos = false;
+                bool[] passouCidade = new bool[qtosDados];
+                int c = 1;
+                PilhaLista<Caminho> caminho = new PilhaLista<Caminho>();
 
+                for (int i = 0; i < qtosDados; i++)
+                    passouCidade[i] = false;
+
+                while (!achouTodos)
+                {
+                    if (cdOrigem == cdDestino)
+                    {
+                        ExibirCaminho(caminho);
+                    }
+                    if (matAdjacencias[cdOrigem, c] != null)
+                    {
+                        if (passouCidade[c] != true)
+                        {
+                            passouCidade[cdOrigem] = true;
+                            caminho.Empilhar(matAdjacencias[cdOrigem, c]);
+                            cdOrigem = c;
+                            c = 0; // recebe 0, pois incrementa logo após
+                        }
+                    }
+                    c++;
+                }
+            }
+            else
+                MessageBox.Show("Você já está na cidade!");
+
+        }
+        void ExibirCaminho(PilhaLista<Caminho> caminho)
+        {
+            
+            
+
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             arvore = new Arvore<Cidade>();
@@ -43,19 +85,27 @@ namespace apCaminhosMarte
                 chkBalanceada.Checked = balanceada;
             }
 
-            foreach (Cidade ci in dadosCidade)
+            for (int i = 0; i < qtosDados; i++)
             {
-                lsbOrigem.Items.Add($"{ci.IdCidade} - {ci.NomeCidade}");
-                lsbDestino.Items.Add($"{ci.IdCidade} - {ci.NomeCidade}");
+                lsbOrigem.Items.Add($"{dadosCidade[i].IdCidade} - {dadosCidade[i].NomeCidade}");
+                lsbDestino.Items.Add($"{dadosCidade[i].IdCidade} - {dadosCidade[i].NomeCidade}");
             }
 
-            pbMapa.Invalidate();
             CriarGrafo();
+            pbMapa.Invalidate();
         }
 
         void CriarGrafo()
         {
-            int[,] matAdjacencias = new int[qtosDados, qtosDados];
+            matAdjacencias = new Caminho[qtosDados - 1, qtosDados - 1];
+
+            var arquivo = new StreamReader(@"CaminhosEntreCidadesMarte.txt");
+
+            while (!arquivo.EndOfStream)
+            {
+                Caminho c = new Caminho(arquivo.ReadLine());
+                matAdjacencias[c.IdCidadeOrigem, c.IdCidadeDestino] = c;
+            }
         }
 
         void ParticionarVetorEmArvore(int inicio, int fim, ref NoArvore<Cidade> noAtual)
@@ -109,7 +159,7 @@ namespace apCaminhosMarte
             Pen caneta = new Pen(Color.Black);
             int x = 0;
             int y = 0;
-            for(int i = 0; i < qtosDados; i++)
+            for (int i = 0; i < qtosDados; i++)
             {
                 Cidade ci = dadosCidade[i];
                 x = Convert.ToInt32((ci.CoordenadaX * pbMapa.Width) / 4096);
