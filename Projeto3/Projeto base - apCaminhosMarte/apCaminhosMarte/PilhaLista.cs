@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class PilhaLista<Dado> : IStack<Dado> where Dado : IComparable<Dado>
+public class PilhaLista<Dado> : IStack<Dado>, IComparable<PilhaLista<Dado>> where Dado : IComparable<Dado>
 {
   private NoLista<Dado> topo;
   private int tamanho;
@@ -40,4 +40,8 @@ public class PilhaLista<Dado> : IStack<Dado> where Dado : IComparable<Dado>
     tamanho--; // atualiza número de elementos na pilha
     return o; // devolve o objeto que estava no topo
   }
+    public int CompareTo(PilhaLista<Dado> outra)
+    {
+        return this.CompareTo(outra);
+    }
 }

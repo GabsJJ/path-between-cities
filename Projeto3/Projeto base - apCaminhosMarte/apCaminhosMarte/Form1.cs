@@ -30,35 +30,49 @@ namespace apCaminhosMarte
                 bool achouTodos = false;
                 bool[] passouCidade = new bool[qtosDados];
                 int c = 1;
-                PilhaLista<Caminho> caminho = new PilhaLista<Caminho>();
+                PilhaLista<Caminho> caminhos = new PilhaLista<Caminho>();
+                PilhaLista<PilhaLista<Caminho>> caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
 
                 for (int i = 0; i < qtosDados; i++)
                     passouCidade[i] = false;
 
-                while (!achouTodos)
+                do
                 {
-                    if (cdOrigem == cdDestino)
+                    if (caminhos.EstaVazia())
+                        achouTodos = true;
+                    if (cdOrigem == cdDestino || c == qtosDados)
                     {
-                        ExibirCaminho(caminho);
+                        caminhosDescobertos.Empilhar(caminhos);
+                        Caminho caminho = caminhos.Desempilhar();
+                        cdOrigem = caminho.IdCidadeOrigem;
+                        c = caminho.IdCidadeDestino + 1;
+                    }
+                    if (c == qtosDados)
+                    {
+                        Caminho caminho = caminhos.Desempilhar();
+                        cdOrigem = caminho.IdCidadeOrigem;
+                        c = caminho.IdCidadeDestino + 1;
                     }
                     if (matAdjacencias[cdOrigem, c] != null)
                     {
                         if (passouCidade[c] != true)
                         {
                             passouCidade[cdOrigem] = true;
-                            caminho.Empilhar(matAdjacencias[cdOrigem, c]);
+                            caminhos.Empilhar(matAdjacencias[cdOrigem, c]);
                             cdOrigem = c;
                             c = 0; // recebe 0, pois incrementa logo após
                         }
                     }
                     c++;
-                }
+                } while (!achouTodos);
+
+                ExibirCaminhos(caminhosDescobertos);
             }
             else
                 MessageBox.Show("Você já está na cidade!");
 
         }
-        void ExibirCaminho(PilhaLista<Caminho> caminho)
+        void ExibirCaminhos(PilhaLista<PilhaLista<Caminho>> caminhos)
         {
             
             
