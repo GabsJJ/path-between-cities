@@ -28,7 +28,7 @@ namespace apCaminhosMarte
             if (cdOrigem != cdDestino)
             {
                 bool achouTodos = false;
-                bool[] passouCidade = new bool[qtosDados];
+                bool[] passouCidade = new bool[qtosDados + 1];
                 int c = 1;
                 PilhaLista<Caminho> caminhos = new PilhaLista<Caminho>();
                 PilhaLista<PilhaLista<Caminho>> caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
@@ -42,13 +42,8 @@ namespace apCaminhosMarte
                         achouTodos = true;
                     if (cdOrigem == cdDestino || c == qtosDados)
                     {
-                        caminhosDescobertos.Empilhar(caminhos);
-                        Caminho caminho = caminhos.Desempilhar();
-                        cdOrigem = caminho.IdCidadeOrigem;
-                        c = caminho.IdCidadeDestino + 1;
-                    }
-                    if (c == qtosDados)
-                    {
+                        if (cdOrigem == cdDestino)
+                            caminhosDescobertos.Empilhar(caminhos);
                         Caminho caminho = caminhos.Desempilhar();
                         cdOrigem = caminho.IdCidadeOrigem;
                         c = caminho.IdCidadeDestino + 1;
@@ -74,9 +69,19 @@ namespace apCaminhosMarte
         }
         void ExibirCaminhos(PilhaLista<PilhaLista<Caminho>> caminhos)
         {
-            
-            
-
+            dgvCaminhos.RowCount = caminhos.Tamanho();
+            for (int i = 0; i < dgvCaminhos.RowCount; i++)
+            {
+                PilhaLista<Caminho> pcAtual = caminhos.Desempilhar();
+                int c = 0;
+                while (!pcAtual.EstaVazia())
+                {
+                    Caminho cAtual = pcAtual.Desempilhar();
+                    dgvCaminhos.Rows[i].Cells[c].Value = dadosCidade[cAtual.IdCidadeOrigem].NomeCidade;
+                    c++;
+                }
+                
+            }
         }
         private void Form1_Load(object sender, EventArgs e)
         {

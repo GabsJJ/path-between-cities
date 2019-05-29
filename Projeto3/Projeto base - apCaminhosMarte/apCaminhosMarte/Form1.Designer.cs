@@ -32,14 +32,14 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpRotas = new System.Windows.Forms.TabPage();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dgvMelhorCaminho = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvCaminhos = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,8 +60,8 @@
             this.dlgAbrir = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tpRotas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMelhorCaminho)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
             this.tpArvore.SuspendLayout();
             this.SuspendLayout();
@@ -82,8 +82,8 @@
             // tpRotas
             // 
             this.tpRotas.Controls.Add(this.btnBuscar);
-            this.tpRotas.Controls.Add(this.dataGridView2);
-            this.tpRotas.Controls.Add(this.dataGridView1);
+            this.tpRotas.Controls.Add(this.dgvMelhorCaminho);
+            this.tpRotas.Controls.Add(this.dgvCaminhos);
             this.tpRotas.Controls.Add(this.label4);
             this.tpRotas.Controls.Add(this.label3);
             this.tpRotas.Controls.Add(this.label2);
@@ -110,24 +110,24 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.BtnBuscar_Click);
             // 
-            // dataGridView2
+            // dgvMelhorCaminho
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvMelhorCaminho.AllowUserToAddRows = false;
+            this.dgvMelhorCaminho.AllowUserToDeleteRows = false;
+            this.dgvMelhorCaminho.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvMelhorCaminho.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMelhorCaminho.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6});
-            this.dataGridView2.Location = new System.Drawing.Point(736, 448);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(277, 71);
-            this.dataGridView2.TabIndex = 10;
+            this.dgvMelhorCaminho.Location = new System.Drawing.Point(736, 448);
+            this.dgvMelhorCaminho.Name = "dgvMelhorCaminho";
+            this.dgvMelhorCaminho.ReadOnly = true;
+            this.dgvMelhorCaminho.Size = new System.Drawing.Size(277, 71);
+            this.dgvMelhorCaminho.TabIndex = 10;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -171,24 +171,24 @@
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
             this.dataGridViewTextBoxColumn6.Width = 75;
             // 
-            // dataGridView1
+            // dgvCaminhos
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvCaminhos.AllowUserToAddRows = false;
+            this.dgvCaminhos.AllowUserToDeleteRows = false;
+            this.dgvCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCaminhos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3,
             this.Column4,
             this.Column5,
             this.Column6});
-            this.dataGridView1.Location = new System.Drawing.Point(736, 238);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(277, 181);
-            this.dataGridView1.TabIndex = 9;
+            this.dgvCaminhos.Location = new System.Drawing.Point(736, 238);
+            this.dgvCaminhos.Name = "dgvCaminhos";
+            this.dgvCaminhos.ReadOnly = true;
+            this.dgvCaminhos.Size = new System.Drawing.Size(277, 181);
+            this.dgvCaminhos.TabIndex = 9;
             // 
             // Column1
             // 
@@ -369,8 +369,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tpRotas.ResumeLayout(false);
             this.tpRotas.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMelhorCaminho)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).EndInit();
             this.tpArvore.ResumeLayout(false);
             this.tpArvore.PerformLayout();
@@ -390,7 +390,7 @@
         private System.Windows.Forms.ListBox lsbOrigem;
         private System.Windows.Forms.PictureBox pbMapa;
         private System.Windows.Forms.TabPage tpArvore;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvCaminhos;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -398,7 +398,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dgvMelhorCaminho;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
