@@ -21,7 +21,7 @@ namespace apCaminhosMarte
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Buscar caminhos entre cidades selecionadas");
-            BuscarCaminhos(lsbOrigem.SelectedIndex + 1, lsbDestino.SelectedIndex + 1);
+            BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
         }
         void BuscarCaminhos(int cdOrigem, int cdDestino)
         {
@@ -38,17 +38,19 @@ namespace apCaminhosMarte
 
                 do
                 {
-                    if (caminhos.EstaVazia())
-                        achouTodos = true;
                     if (cdOrigem == cdDestino || c == qtosDados)
                     {
+                        if (caminhos.EstaVazia())
+                        {
+                            achouTodos = true;
+                        }
                         if (cdOrigem == cdDestino)
                             caminhosDescobertos.Empilhar(caminhos);
                         Caminho caminho = caminhos.Desempilhar();
                         cdOrigem = caminho.IdCidadeOrigem;
                         c = caminho.IdCidadeDestino + 1;
                     }
-                    if (matAdjacencias[cdOrigem, c] != null)
+                    if (c < qtosDados - 1 && matAdjacencias[cdOrigem, c] != null)
                     {
                         if (passouCidade[c] != true)
                         {
@@ -59,7 +61,8 @@ namespace apCaminhosMarte
                         }
                     }
                     c++;
-                } while (!achouTodos);
+                }
+                while (!achouTodos);
 
                 ExibirCaminhos(caminhosDescobertos);
             }
@@ -80,7 +83,7 @@ namespace apCaminhosMarte
                     dgvCaminhos.Rows[i].Cells[c].Value = dadosCidade[cAtual.IdCidadeOrigem].NomeCidade;
                     c++;
                 }
-                
+
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -176,7 +179,7 @@ namespace apCaminhosMarte
         {
             int x = 0;
             int y = 0;
-            if(atual != null)
+            if (atual != null)
             {
                 x = Convert.ToInt32((atual.Info.CoordenadaX * pbMapa.Width) / 4096);
                 y = Convert.ToInt32((atual.Info.CoordenadaY * pbMapa.Height) / 2048);
