@@ -167,20 +167,20 @@ namespace apCaminhosMarte
             }
         }
 
-        void DesenharPontos(Graphics g)
+        void DesenharPontos(NoArvore<Cidade> atual, SolidBrush preenchimento, Pen caneta, Graphics g)
         {
-            SolidBrush preenchimento = new SolidBrush(Color.Black);
-            Pen caneta = new Pen(Color.Black);
             int x = 0;
             int y = 0;
-            for (int i = 0; i < qtosDados; i++)
+            if(atual != null)
             {
-                Cidade ci = dadosCidade[i];
-                x = Convert.ToInt32((ci.CoordenadaX * pbMapa.Width) / 4096);
-                y = Convert.ToInt32((ci.CoordenadaY * pbMapa.Height) / 2048);
+                x = Convert.ToInt32((atual.Info.CoordenadaX * pbMapa.Width) / 4096);
+                y = Convert.ToInt32((atual.Info.CoordenadaY * pbMapa.Height) / 2048);
                 g.FillEllipse(preenchimento, x, y, 10, 10);
-                g.DrawString(ci.NomeCidade, new Font("Comic Sans", 10),
+                g.DrawString(atual.Info.NomeCidade, new Font("Comic Sans ms", 10),
                               new SolidBrush(Color.Black), x - 10, y + 15);
+
+                DesenharPontos(atual.Esq, preenchimento, caneta, g);
+                DesenharPontos(atual.Dir, preenchimento, caneta, g);
             }
         }
 
@@ -198,7 +198,9 @@ namespace apCaminhosMarte
         private void pbMapa_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            DesenharPontos(g);
+            SolidBrush preenchimento = new SolidBrush(Color.Black);
+            Pen caneta = new Pen(Color.Black);
+            DesenharPontos(arvore.Raiz, preenchimento, caneta, g);
         }
     }
 }
