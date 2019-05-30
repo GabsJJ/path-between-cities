@@ -38,19 +38,22 @@ namespace apCaminhosMarte
 
                 do
                 {
-                    if (cdOrigem == cdDestino || c == qtosDados)
+                    if (cdOrigem == cdDestino || c >= qtosDados)
                     {
                         if (caminhos.EstaVazia())
                         {
                             achouTodos = true;
                         }
-                        if (cdOrigem == cdDestino)
-                            caminhosDescobertos.Empilhar(caminhos);
-                        Caminho caminho = caminhos.Desempilhar();
-                        cdOrigem = caminho.IdCidadeOrigem;
-                        c = caminho.IdCidadeDestino + 1;
+                        else
+                        {
+                            if (cdOrigem == cdDestino)
+                                caminhosDescobertos.Empilhar(caminhos.Copia());
+                            Caminho caminho = caminhos.Desempilhar();
+                            cdOrigem = caminho.IdCidadeOrigem;
+                            c = caminho.IdCidadeDestino + 1;
+                        }
                     }
-                    if (c < qtosDados - 1 && matAdjacencias[cdOrigem, c] != null)
+                    if (c < qtosDados && matAdjacencias[cdOrigem, c] != null)
                     {
                         if (passouCidade[c] != true)
                         {
@@ -72,18 +75,27 @@ namespace apCaminhosMarte
         }
         void ExibirCaminhos(PilhaLista<PilhaLista<Caminho>> caminhos)
         {
+            dgvCaminhos.Rows.Clear();
             dgvCaminhos.RowCount = caminhos.Tamanho();
+            dgvCaminhos.ColumnCount = 10;
             for (int i = 0; i < dgvCaminhos.RowCount; i++)
             {
                 PilhaLista<Caminho> pcAtual = caminhos.Desempilhar();
-                int c = 0;
+                var aux = new PilhaLista<Caminho>();
+
                 while (!pcAtual.EstaVazia())
+                    aux.Empilhar(pcAtual.Desempilhar());
+
+                int c = 0;
+                Caminho cAtual = null;
+                
+                while (!aux.EstaVazia())
                 {
-                    Caminho cAtual = pcAtual.Desempilhar();
+                    cAtual = aux.Desempilhar();
                     dgvCaminhos.Rows[i].Cells[c].Value = dadosCidade[cAtual.IdCidadeOrigem].NomeCidade;
                     c++;
                 }
-
+                dgvCaminhos.Rows[i].Cells[c].Value = dadosCidade[cAtual.IdCidadeDestino].NomeCidade;
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -119,7 +131,7 @@ namespace apCaminhosMarte
 
         void CriarGrafo()
         {
-            matAdjacencias = new Caminho[qtosDados - 1, qtosDados - 1];
+            matAdjacencias = new Caminho[qtosDados, qtosDados];
 
             var arquivo = new StreamReader(@"CaminhosEntreCidadesMarte.txt");
 

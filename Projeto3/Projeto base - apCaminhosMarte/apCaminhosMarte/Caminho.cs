@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Caminho : IComparable<Caminho>
+public class Caminho : IComparable<Caminho>, ICopiavel<Caminho>
 {
     private int idCidadeOrigem, idCidadeDestino, distancia, tempo, custo;
     const int inicioIdCidadeOrigem = 0;
@@ -26,14 +26,36 @@ public class Caminho : IComparable<Caminho>
 
     public Caminho(string linha)
     {
-        this.idCidadeOrigem = int.Parse(linha.Substring(inicioIdCidadeOrigem,tamanhoIdCidadeOrigem));
-        this.idCidadeDestino = int.Parse(linha.Substring(inicioIdCidadeDestino,tamanhoIdCidadeDestino));
-        this.distancia = int.Parse(linha.Substring(inicioDistancia,tamanhoDistancia));
-        this.tempo = int.Parse(linha.Substring(inicioTempo,tamanhoTempo));
-        this.custo = int.Parse(linha.Substring(inicioCusto));
+        this.IdCidadeOrigem = int.Parse(linha.Substring(inicioIdCidadeOrigem,tamanhoIdCidadeOrigem));
+        this.IdCidadeDestino = int.Parse(linha.Substring(inicioIdCidadeDestino,tamanhoIdCidadeDestino));
+        this.Distancia = int.Parse(linha.Substring(inicioDistancia,tamanhoDistancia));
+        this.Tempo = int.Parse(linha.Substring(inicioTempo,tamanhoTempo));
+        this.Custo = int.Parse(linha.Substring(inicioCusto));
     }
+
+    public Caminho()
+    {
+        this.IdCidadeOrigem = default(int);
+        this.IdCidadeDestino = default(int);
+        this.Distancia = default(int);
+        this.Tempo = default(int);
+        this.Custo = default(int);
+    }
+
     public int CompareTo(Caminho outro)
     {
         return this.CompareTo(outro);
+    }
+
+    public Caminho Copia()
+    {
+        Caminho c = new Caminho();
+        c.IdCidadeOrigem = IdCidadeOrigem;
+        c.IdCidadeDestino = IdCidadeDestino;
+        c.Distancia = Distancia;
+        c.Tempo = Tempo;
+        c.Custo = Custo;
+
+        return c;
     }
 }

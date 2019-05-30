@@ -56,6 +56,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ICopiavel.cs" />
     <Compile Include="IGravarEmArquivo.cs" />
     <Compile Include="IStack.cs" />
     <Compile Include="ListaSimples.cs" />
