@@ -12,6 +12,7 @@ namespace apCaminhosMarte
         int qtosDados = 0;
         Arvore<Cidade> arvore;
         Caminho[,] matAdjacencias;
+        PilhaLista<PilhaLista<Caminho>> caminhosDescobertos;
 
         public Form1()
         {
@@ -31,7 +32,7 @@ namespace apCaminhosMarte
                 bool[] passouCidade = new bool[qtosDados + 1];
                 int c = 1;
                 PilhaLista<Caminho> caminhos = new PilhaLista<Caminho>();
-                PilhaLista<PilhaLista<Caminho>> caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
+                caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
 
                 for (int i = 0; i < qtosDados; i++)
                     passouCidade[i] = false;
@@ -66,7 +67,6 @@ namespace apCaminhosMarte
                     c++;
                 }
                 while (!achouTodos);
-
                 ExibirCaminhos(caminhosDescobertos);
             }
             else
@@ -78,17 +78,22 @@ namespace apCaminhosMarte
             dgvCaminhos.Rows.Clear();
             dgvCaminhos.RowCount = caminhos.Tamanho();
             dgvCaminhos.ColumnCount = 10;
+            var pilhaCopia = caminhos.Copia();
+            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Yellow };
+            
             for (int i = 0; i < dgvCaminhos.RowCount; i++)
             {
                 PilhaLista<Caminho> pcAtual = caminhos.Desempilhar();
                 var aux = new PilhaLista<Caminho>();
-
+                
                 while (!pcAtual.EstaVazia())
                     aux.Empilhar(pcAtual.Desempilhar());
 
                 int c = 0;
                 Caminho cAtual = null;
+                dgvCaminhos.Rows[i].DefaultCellStyle.ForeColor = Color.White;
                 
+                dgvCaminhos.Rows[i].DefaultCellStyle.BackColor = cores[i];
                 while (!aux.EstaVazia())
                 {
                     cAtual = aux.Desempilhar();
@@ -97,9 +102,12 @@ namespace apCaminhosMarte
                 }
                 dgvCaminhos.Rows[i].Cells[c].Value = dadosCidade[cAtual.IdCidadeDestino].NomeCidade;
             }
+            caminhosDescobertos = pilhaCopia;
+            pbMapa.Invalidate();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
             arvore = new Arvore<Cidade>();
             if (dlgAbrir.ShowDialog() == DialogResult.OK)
             {
@@ -203,7 +211,33 @@ namespace apCaminhosMarte
                 DesenharPontos(atual.Dir, preenchimento, caneta, g);
             }
         }
+        void DesenharCaminhos(PilhaLista<PilhaLista<Caminho>> caminhosDescobertos, SolidBrush preenchimento, Pen caneta, Graphics g)
+        {
+            int xOrigem = 0;
+            int yOrigem = 0;
+            int xDestino = 0;
+            int yDestino = 0;
+            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Yellow};
+            int i = 0;
+            while (!caminhosDescobertos.EstaVazia())
+            {
+                var umCaminho = caminhosDescobertos.Desempilhar();
+                preenchimento = new SolidBrush(cores[i]);
+                caneta = new Pen(cores[i],3);
+                while (!umCaminho.EstaVazia())
+                {
+                    var caminho = umCaminho.Desempilhar();
+                    xOrigem = (dadosCidade[caminho.IdCidadeOrigem].CoordenadaX * pbMapa.Width) / 4096;
+                    yOrigem = (dadosCidade[caminho.IdCidadeOrigem].CoordenadaY * pbMapa.Height) / 2048;
+                    xDestino = (dadosCidade[caminho.IdCidadeDestino].CoordenadaX * pbMapa.Width) / 4096;
+                    yDestino = (dadosCidade[caminho.IdCidadeDestino].CoordenadaY * pbMapa.Height) / 2048;
 
+                    g.DrawLine(caneta, xOrigem, yOrigem, xDestino, yDestino);
+                }
+                i++;
+            }
+            
+        }
         void pnlArvore_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -221,6 +255,13 @@ namespace apCaminhosMarte
             SolidBrush preenchimento = new SolidBrush(Color.Black);
             Pen caneta = new Pen(Color.Black);
             DesenharPontos(arvore.Raiz, preenchimento, caneta, g);
+            if (!caminhosDescobertos.EstaVazia())
+                DesenharCaminhos(caminhosDescobertos, preenchimento, caneta, g);
+        }
+
+        private void pbMapa_Resize(object sender, EventArgs e)
+        {
+            BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
         }
     }
 }

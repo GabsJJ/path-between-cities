@@ -175,6 +175,8 @@
             // 
             this.dgvCaminhos.AllowUserToAddRows = false;
             this.dgvCaminhos.AllowUserToDeleteRows = false;
+            this.dgvCaminhos.AllowUserToResizeColumns = false;
+            this.dgvCaminhos.AllowUserToResizeRows = false;
             this.dgvCaminhos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCaminhos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -187,6 +189,8 @@
             this.dgvCaminhos.Location = new System.Drawing.Point(736, 238);
             this.dgvCaminhos.Name = "dgvCaminhos";
             this.dgvCaminhos.ReadOnly = true;
+            this.dgvCaminhos.RowHeadersVisible = false;
+            this.dgvCaminhos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvCaminhos.Size = new System.Drawing.Size(277, 181);
             this.dgvCaminhos.TabIndex = 9;
             // 
@@ -307,6 +311,7 @@
             this.pbMapa.TabIndex = 0;
             this.pbMapa.TabStop = false;
             this.pbMapa.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMapa_Paint);
+            this.pbMapa.Resize += new System.EventHandler(this.pbMapa_Resize);
             // 
             // tpArvore
             // 

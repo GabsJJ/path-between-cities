@@ -28,3 +28,13 @@ D:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEnt
 D:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.CoreCompileInputs.cache
 D:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.exe
 D:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.pdb
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.exe.config
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.exe
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.pdb
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csprojResolveAssemblyReference.cache
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.Form1.resources
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.Properties.Resources.resources
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.GenerateResource.Cache
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.CoreCompileInputs.cache
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.exe
+F:\Informática\3°Semestre\Estruturas de Dados I\Projetos\Projeto3ED-CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.pdb
