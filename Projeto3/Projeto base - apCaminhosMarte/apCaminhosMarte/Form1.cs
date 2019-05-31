@@ -70,6 +70,7 @@ namespace apCaminhosMarte
                 ExibirCaminhos(caminhosDescobertos);
             }
             else
+                if (cdOrigem != -1 && cdDestino != -1)
                 MessageBox.Show("Você já está na cidade!");
 
         }
@@ -126,7 +127,6 @@ namespace apCaminhosMarte
                                      arvore.Altura(ref balanceada));
                 chkBalanceada.Checked = balanceada;
             }
-
             for (int i = 0; i < qtosDados; i++)
             {
                 lsbOrigem.Items.Add($"{dadosCidade[i].IdCidade} - {dadosCidade[i].NomeCidade}");
