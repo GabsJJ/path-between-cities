@@ -29,43 +29,37 @@ namespace apCaminhosMarte
             if (cdOrigem != cdDestino)
             {
                 bool achouTodos = false;
-                bool[,] passouCidade = new bool[qtosDados, qtosDados];
-                int c = 1;
+                bool[] passouCidade = new bool[qtosDados + 1];
+                int c = 0;
                 PilhaLista<Caminho> caminhos = new PilhaLista<Caminho>();
                 caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
 
                 for (int i = 0; i < qtosDados; i++)
-                    for(int ii = 0; ii < qtosDados; ii++)
-                        passouCidade[i,ii] = false;
-
+                    passouCidade[i] = false;
                 do
                 {
                     if (cdOrigem == cdDestino || c >= qtosDados)
                     {
                         if (caminhos.EstaVazia())
-                        {
                             achouTodos = true;
-                        }
                         else
                         {
                             if (cdOrigem == cdDestino)
                                 caminhosDescobertos.Empilhar(caminhos.Copia());
                             Caminho caminho = caminhos.Desempilhar();
                             cdOrigem = caminho.IdCidadeOrigem;
-                            c = 0;
+                            c = caminho.IdCidadeDestino + 1;
                         }
                     }
                     if (c < qtosDados && matAdjacencias[cdOrigem, c] != null)
                     {
-                        if (passouCidade[cdOrigem, c] != true)
+                        if (passouCidade[c] != true)
                         {
-                            passouCidade[cdOrigem, c] = true;
+                            passouCidade[cdOrigem] = true;
                             caminhos.Empilhar(matAdjacencias[cdOrigem, c]);
                             cdOrigem = c;
-                            c = 0; // recebe 0, pois incrementa logo após
+                            c = -1; // recebe -1, pois incrementa logo após
                         }
-                        else
-                            VerificarCaminhosJaPassados(ref caminhos, caminhosDescobertos);
                     }
                     c++;
                 }
@@ -74,34 +68,9 @@ namespace apCaminhosMarte
             }
             else
                 if (cdOrigem != -1 && cdDestino != -1)
-                MessageBox.Show("Você já está na cidade!");
+                    MessageBox.Show("Você já está na cidade!");
 
         }
-
-        void VerificarCaminhosJaPassados(ref PilhaLista<Caminho> pilhaAVerificar, 
-            PilhaLista<PilhaLista<Caminho>> caminhosDescobertos)
-        {
-            if (!caminhosDescobertos.EstaVazia())
-            {
-                var pilhaAtual = caminhosDescobertos.Desempilhar();
-                var caminhoAtual = pilhaAtual.Desempilhar();
-
-                if (!pilhaAtual.EstaVazia())
-                {
-                    if (caminhoAtual.CompareTo(pilhaAVerificar.OTopo()) == 0)
-                    {
-                        while (!pilhaAtual.EstaVazia())
-                        {
-                            pilhaAVerificar.Empilhar(caminhoAtual);
-                            caminhoAtual = pilhaAtual.Desempilhar();
-                        }
-                    }
-                    else
-                        caminhoAtual = pilhaAtual.Desempilhar();
-                }
-            }
-        }
-
         void ExibirCaminhos(PilhaLista<PilhaLista<Caminho>> caminhos)
         {
             dgvCaminhos.Rows.Clear();
@@ -150,10 +119,6 @@ namespace apCaminhosMarte
                 arvore.Raiz = primeiroNo;
 
                 pnlArvore.Invalidate();
-                bool balanceada = true;
-                lblAltura.Text = "Altura : " + Convert.ToString(
-                                     arvore.Altura(ref balanceada));
-                chkBalanceada.Checked = balanceada;
             }
             for (int i = 0; i < qtosDados; i++)
             {
@@ -271,10 +236,6 @@ namespace apCaminhosMarte
             Graphics g = e.Graphics;
             DesenhaArvore(true, arvore.Raiz, (int)pnlArvore.Width / 2, 0, Math.PI / 2,
                                  Math.PI / 2.5, 425, g);
-            bool balanceada = false;
-            lblAltura.Text = "Altura : " + Convert.ToString(
-                           arvore.Altura(ref balanceada));
-            chkBalanceada.Checked = balanceada;
         }
 
         private void pbMapa_Paint(object sender, PaintEventArgs e)
@@ -288,6 +249,11 @@ namespace apCaminhosMarte
         }
 
         private void pbMapa_Resize(object sender, EventArgs e)
+        {
+            BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
         {
             BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
         }

@@ -44,9 +44,7 @@ public class Caminho : IComparable<Caminho>, ICopiavel<Caminho>
 
     public int CompareTo(Caminho outro)
     {
-        if(IdCidadeOrigem == outro.IdCidadeOrigem && IdCidadeDestino == outro.IdCidadeDestino)
-            return 0;
-        return 1;
+        return this.CompareTo(outro);
     }
 
     public Caminho Copia()
