@@ -9,10 +9,11 @@ namespace apCaminhosMarte
     public partial class Form1 : Form
     {
         Cidade[] dadosCidade = new Cidade[10000];
-        int qtosDados = 0;
+        int qtosDados = 0, corAtual;
         Arvore<Cidade> arvore;
         Caminho[,] matAdjacencias;
         PilhaLista<PilhaLista<Caminho>> caminhosDescobertos;
+        PilhaLista<Caminho> caminhoADesenhar;
 
         public Form1()
         {
@@ -24,48 +25,45 @@ namespace apCaminhosMarte
             //MessageBox.Show("Buscar caminhos entre cidades selecionadas");
             BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
         }
+
         void BuscarCaminhos(int cdOrigem, int cdDestino)
         {
             if (cdOrigem != cdDestino)
             {
                 bool achouTodos = false;
-                bool[,] passouCidade = new bool[qtosDados, qtosDados];
-                int c = 1;
+                bool[] passouCidade = new bool[qtosDados + 1];
+                int c = 0;
                 PilhaLista<Caminho> caminhos = new PilhaLista<Caminho>();
                 caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
 
                 for (int i = 0; i < qtosDados; i++)
-                    for(int ii = 0; ii < qtosDados; ii++)
-                        passouCidade[i,ii] = false;
-
+                    passouCidade[i] = false;
                 do
                 {
                     if (cdOrigem == cdDestino || c >= qtosDados)
                     {
                         if (caminhos.EstaVazia())
-                        {
                             achouTodos = true;
-                        }
                         else
                         {
                             if (cdOrigem == cdDestino)
                                 caminhosDescobertos.Empilhar(caminhos.Copia());
                             Caminho caminho = caminhos.Desempilhar();
                             cdOrigem = caminho.IdCidadeOrigem;
-                            c = 0;
+                            passouCidade[caminho.IdCidadeDestino] = false;
+                            if (caminho.IdCidadeDestino != caminho.IdCidadeOrigem)
+                                c = caminho.IdCidadeDestino + 1;
                         }
                     }
                     if (c < qtosDados && matAdjacencias[cdOrigem, c] != null)
                     {
-                        if (passouCidade[cdOrigem, c] != true)
+                        if (passouCidade[c] != true)
                         {
-                            passouCidade[cdOrigem, c] = true;
+                            passouCidade[cdOrigem] = true;
                             caminhos.Empilhar(matAdjacencias[cdOrigem, c]);
                             cdOrigem = c;
-                            c = 0; // recebe 0, pois incrementa logo após
+                            c = -1; // recebe -1, pois incrementa logo após
                         }
-                        else
-                            VerificarCaminhosJaPassados(ref caminhos, caminhosDescobertos);
                     }
                     c++;
                 }
@@ -78,50 +76,26 @@ namespace apCaminhosMarte
 
         }
 
-        void VerificarCaminhosJaPassados(ref PilhaLista<Caminho> pilhaAVerificar, 
-            PilhaLista<PilhaLista<Caminho>> caminhosDescobertos)
-        {
-            if (!caminhosDescobertos.EstaVazia())
-            {
-                var pilhaAtual = caminhosDescobertos.Desempilhar();
-                var caminhoAtual = pilhaAtual.Desempilhar();
-
-                if (!pilhaAtual.EstaVazia())
-                {
-                    if (caminhoAtual.CompareTo(pilhaAVerificar.OTopo()) == 0)
-                    {
-                        while (!pilhaAtual.EstaVazia())
-                        {
-                            pilhaAVerificar.Empilhar(caminhoAtual);
-                            caminhoAtual = pilhaAtual.Desempilhar();
-                        }
-                    }
-                    else
-                        caminhoAtual = pilhaAtual.Desempilhar();
-                }
-            }
-        }
-
         void ExibirCaminhos(PilhaLista<PilhaLista<Caminho>> caminhos)
         {
             dgvCaminhos.Rows.Clear();
             dgvCaminhos.RowCount = caminhos.Tamanho();
             dgvCaminhos.ColumnCount = 10;
             var pilhaCopia = caminhos.Copia();
-            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Yellow };
-            
+            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Purple, Color.Navy, Color.Brown };
+
             for (int i = 0; i < dgvCaminhos.RowCount; i++)
             {
                 PilhaLista<Caminho> pcAtual = caminhos.Desempilhar();
                 var aux = new PilhaLista<Caminho>();
-                
+
                 while (!pcAtual.EstaVazia())
                     aux.Empilhar(pcAtual.Desempilhar());
 
                 int c = 0;
                 Caminho cAtual = null;
                 dgvCaminhos.Rows[i].DefaultCellStyle.ForeColor = Color.White;
-                
+
                 dgvCaminhos.Rows[i].DefaultCellStyle.BackColor = cores[i];
                 while (!aux.EstaVazia())
                 {
@@ -134,27 +108,22 @@ namespace apCaminhosMarte
             caminhosDescobertos = pilhaCopia;
             pbMapa.Invalidate();
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            caminhoADesenhar = new PilhaLista<Caminho>();
             caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
             arvore = new Arvore<Cidade>();
-            if (dlgAbrir.ShowDialog() == DialogResult.OK)
-            {
-                var arq = new StreamReader(dlgAbrir.FileName, Encoding.UTF7);
-                while (!arq.EndOfStream)
-                    dadosCidade[qtosDados++] = new Cidade(arq.ReadLine());
-                arq.Close();
+            var arq = new StreamReader(@"CidadesMarteOrdenado.txt", Encoding.UTF7);
+            while (!arq.EndOfStream)
+                dadosCidade[qtosDados++] = new Cidade(arq.ReadLine());
+            arq.Close();
 
-                NoArvore<Cidade> primeiroNo = null;
-                ParticionarVetorEmArvore(0, qtosDados - 1, ref primeiroNo);
-                arvore.Raiz = primeiroNo;
+            NoArvore<Cidade> primeiroNo = null;
+            ParticionarVetorEmArvore(0, qtosDados - 1, ref primeiroNo);
+            arvore.Raiz = primeiroNo;
+            pnlArvore.Invalidate();
 
-                pnlArvore.Invalidate();
-                bool balanceada = true;
-                lblAltura.Text = "Altura : " + Convert.ToString(
-                                     arvore.Altura(ref balanceada));
-                chkBalanceada.Checked = balanceada;
-            }
             for (int i = 0; i < qtosDados; i++)
             {
                 lsbOrigem.Items.Add($"{dadosCidade[i].IdCidade} - {dadosCidade[i].NomeCidade}");
@@ -239,42 +208,32 @@ namespace apCaminhosMarte
                 DesenharPontos(atual.Dir, preenchimento, caneta, g);
             }
         }
-        void DesenharCaminhos(PilhaLista<PilhaLista<Caminho>> caminhosDescobertos, SolidBrush preenchimento, Pen caneta, Graphics g)
+        void DesenharCaminhos(PilhaLista<Caminho> aDesenhar, SolidBrush preenchimento, Pen caneta, Graphics g, int cor)
         {
             int xOrigem = 0;
             int yOrigem = 0;
             int xDestino = 0;
             int yDestino = 0;
-            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Yellow};
-            int i = 0;
-            while (!caminhosDescobertos.EstaVazia())
-            {
-                var umCaminho = caminhosDescobertos.Desempilhar();
-                preenchimento = new SolidBrush(cores[i]);
-                caneta = new Pen(cores[i],3);
-                while (!umCaminho.EstaVazia())
-                {
-                    var caminho = umCaminho.Desempilhar();
-                    xOrigem = (dadosCidade[caminho.IdCidadeOrigem].CoordenadaX * pbMapa.Width) / 4096;
-                    yOrigem = (dadosCidade[caminho.IdCidadeOrigem].CoordenadaY * pbMapa.Height) / 2048;
-                    xDestino = (dadosCidade[caminho.IdCidadeDestino].CoordenadaX * pbMapa.Width) / 4096;
-                    yDestino = (dadosCidade[caminho.IdCidadeDestino].CoordenadaY * pbMapa.Height) / 2048;
+            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Purple, Color.Navy, Color.Brown };
 
-                    g.DrawLine(caneta, xOrigem, yOrigem, xDestino, yDestino);
-                }
-                i++;
+            preenchimento = new SolidBrush(cores[cor]);
+            caneta = new Pen(cores[cor], 3);
+            while (!aDesenhar.EstaVazia())
+            {
+                var caminho = aDesenhar.Desempilhar();
+                xOrigem = (dadosCidade[caminho.IdCidadeOrigem].CoordenadaX * pbMapa.Width) / 4096;
+                yOrigem = (dadosCidade[caminho.IdCidadeOrigem].CoordenadaY * pbMapa.Height) / 2048;
+                xDestino = (dadosCidade[caminho.IdCidadeDestino].CoordenadaX * pbMapa.Width) / 4096;
+                yDestino = (dadosCidade[caminho.IdCidadeDestino].CoordenadaY * pbMapa.Height) / 2048;
+
+                g.DrawLine(caneta, xOrigem, yOrigem, xDestino, yDestino);
             }
-            
         }
         void pnlArvore_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             DesenhaArvore(true, arvore.Raiz, (int)pnlArvore.Width / 2, 0, Math.PI / 2,
                                  Math.PI / 2.5, 425, g);
-            bool balanceada = false;
-            lblAltura.Text = "Altura : " + Convert.ToString(
-                           arvore.Altura(ref balanceada));
-            chkBalanceada.Checked = balanceada;
         }
 
         private void pbMapa_Paint(object sender, PaintEventArgs e)
@@ -283,13 +242,28 @@ namespace apCaminhosMarte
             SolidBrush preenchimento = new SolidBrush(Color.Black);
             Pen caneta = new Pen(Color.Black);
             DesenharPontos(arvore.Raiz, preenchimento, caneta, g);
-            if (!caminhosDescobertos.EstaVazia())
-                DesenharCaminhos(caminhosDescobertos, preenchimento, caneta, g);
+            if (!caminhoADesenhar.EstaVazia())
+                DesenharCaminhos(caminhoADesenhar, preenchimento, caneta, g, corAtual);
         }
 
         private void pbMapa_Resize(object sender, EventArgs e)
         {
             BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
+        }
+
+        private void dgvCaminhos_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int selecionado = e.RowIndex;
+            var aux = caminhosDescobertos.Copia();
+            for (int i = 0; i <= selecionado; i++)
+                caminhoADesenhar = aux.Desempilhar();
+            corAtual = selecionado;
+            pbMapa.Invalidate();
         }
     }
 }

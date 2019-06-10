@@ -40,6 +40,13 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvCaminhos = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,17 +55,8 @@
             this.lsbOrigem = new System.Windows.Forms.ListBox();
             this.pbMapa = new System.Windows.Forms.PictureBox();
             this.tpArvore = new System.Windows.Forms.TabPage();
-            this.lblAltura = new System.Windows.Forms.Label();
-            this.chkBalanceada = new System.Windows.Forms.CheckBox();
             this.pnlArvore = new System.Windows.Forms.Panel();
             this.dlgAbrir = new System.Windows.Forms.OpenFileDialog();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tpRotas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMelhorCaminho)).BeginInit();
@@ -79,6 +77,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1088, 619);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
             // tpRotas
             // 
@@ -103,7 +102,7 @@
             // btnBuscar
             // 
             this.btnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBuscar.Location = new System.Drawing.Point(920, 190);
+            this.btnBuscar.Location = new System.Drawing.Point(984, 190);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(89, 23);
             this.btnBuscar.TabIndex = 11;
@@ -127,7 +126,7 @@
             this.dgvMelhorCaminho.Location = new System.Drawing.Point(736, 448);
             this.dgvMelhorCaminho.Name = "dgvMelhorCaminho";
             this.dgvMelhorCaminho.ReadOnly = true;
-            this.dgvMelhorCaminho.Size = new System.Drawing.Size(277, 71);
+            this.dgvMelhorCaminho.Size = new System.Drawing.Size(337, 71);
             this.dgvMelhorCaminho.TabIndex = 10;
             // 
             // dataGridViewTextBoxColumn1
@@ -191,136 +190,9 @@
             this.dgvCaminhos.Location = new System.Drawing.Point(736, 238);
             this.dgvCaminhos.Name = "dgvCaminhos";
             this.dgvCaminhos.ReadOnly = true;
-            this.dgvCaminhos.RowHeadersVisible = false;
-            this.dgvCaminhos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvCaminhos.Size = new System.Drawing.Size(277, 181);
+            this.dgvCaminhos.Size = new System.Drawing.Size(337, 181);
             this.dgvCaminhos.TabIndex = 9;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(733, 429);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Melhor caminho";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(733, 222);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Caminhos encontrados:";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(734, 113);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Destino";
-            // 
-            // lsbDestino
-            // 
-            this.lsbDestino.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lsbDestino.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lsbDestino.FormattingEnabled = true;
-            this.lsbDestino.ItemHeight = 16;
-            this.lsbDestino.Location = new System.Drawing.Point(737, 129);
-            this.lsbDestino.Name = "lsbDestino";
-            this.lsbDestino.Size = new System.Drawing.Size(177, 84);
-            this.lsbDestino.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(737, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Origem";
-            // 
-            // lsbOrigem
-            // 
-            this.lsbOrigem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lsbOrigem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lsbOrigem.FormattingEnabled = true;
-            this.lsbOrigem.ItemHeight = 16;
-            this.lsbOrigem.Location = new System.Drawing.Point(737, 25);
-            this.lsbOrigem.Name = "lsbOrigem";
-            this.lsbOrigem.Size = new System.Drawing.Size(177, 84);
-            this.lsbOrigem.TabIndex = 1;
-            // 
-            // pbMapa
-            // 
-            this.pbMapa.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbMapa.Image = ((System.Drawing.Image)(resources.GetObject("pbMapa.Image")));
-            this.pbMapa.Location = new System.Drawing.Point(7, 7);
-            this.pbMapa.Name = "pbMapa";
-            this.pbMapa.Size = new System.Drawing.Size(723, 512);
-            this.pbMapa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbMapa.TabIndex = 0;
-            this.pbMapa.TabStop = false;
-            this.pbMapa.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMapa_Paint);
-            this.pbMapa.Resize += new System.EventHandler(this.pbMapa_Resize);
-            // 
-            // tpArvore
-            // 
-            this.tpArvore.Controls.Add(this.lblAltura);
-            this.tpArvore.Controls.Add(this.chkBalanceada);
-            this.tpArvore.Controls.Add(this.pnlArvore);
-            this.tpArvore.Location = new System.Drawing.Point(4, 22);
-            this.tpArvore.Name = "tpArvore";
-            this.tpArvore.Padding = new System.Windows.Forms.Padding(3);
-            this.tpArvore.Size = new System.Drawing.Size(1080, 593);
-            this.tpArvore.TabIndex = 1;
-            this.tpArvore.Text = "Árvore de Cidades";
-            this.tpArvore.UseVisualStyleBackColor = true;
-            // 
-            // lblAltura
-            // 
-            this.lblAltura.AutoSize = true;
-            this.lblAltura.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAltura.Location = new System.Drawing.Point(116, 7);
-            this.lblAltura.Name = "lblAltura";
-            this.lblAltura.Size = new System.Drawing.Size(53, 18);
-            this.lblAltura.TabIndex = 2;
-            this.lblAltura.Text = "Altura: ";
-            // 
-            // chkBalanceada
-            // 
-            this.chkBalanceada.AutoSize = true;
-            this.chkBalanceada.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkBalanceada.Location = new System.Drawing.Point(6, 6);
-            this.chkBalanceada.Name = "chkBalanceada";
-            this.chkBalanceada.Size = new System.Drawing.Size(104, 22);
-            this.chkBalanceada.TabIndex = 1;
-            this.chkBalanceada.Text = "Balanceada";
-            this.chkBalanceada.UseVisualStyleBackColor = true;
-            // 
-            // pnlArvore
-            // 
-            this.pnlArvore.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlArvore.Location = new System.Drawing.Point(6, 28);
-            this.pnlArvore.Name = "pnlArvore";
-            this.pnlArvore.Size = new System.Drawing.Size(1067, 556);
-            this.pnlArvore.TabIndex = 0;
-            this.pnlArvore.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlArvore_Paint);
-            // 
-            // dlgAbrir
-            // 
-            this.dlgAbrir.FileName = "openFileDialog1";
+            this.dgvCaminhos.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCaminhos_RowHeaderMouseClick);
             // 
             // Column1
             // 
@@ -370,6 +242,109 @@
             this.Cidade.Name = "Cidade";
             this.Cidade.ReadOnly = true;
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(733, 429);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(82, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Melhor caminho";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(733, 222);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(118, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Caminhos encontrados:";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(734, 113);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Destino";
+            // 
+            // lsbDestino
+            // 
+            this.lsbDestino.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lsbDestino.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lsbDestino.FormattingEnabled = true;
+            this.lsbDestino.ItemHeight = 16;
+            this.lsbDestino.Location = new System.Drawing.Point(737, 129);
+            this.lsbDestino.Name = "lsbDestino";
+            this.lsbDestino.Size = new System.Drawing.Size(203, 84);
+            this.lsbDestino.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(737, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Origem";
+            // 
+            // lsbOrigem
+            // 
+            this.lsbOrigem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lsbOrigem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lsbOrigem.FormattingEnabled = true;
+            this.lsbOrigem.ItemHeight = 16;
+            this.lsbOrigem.Location = new System.Drawing.Point(737, 25);
+            this.lsbOrigem.Name = "lsbOrigem";
+            this.lsbOrigem.Size = new System.Drawing.Size(203, 84);
+            this.lsbOrigem.TabIndex = 1;
+            // 
+            // pbMapa
+            // 
+            this.pbMapa.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbMapa.Image = ((System.Drawing.Image)(resources.GetObject("pbMapa.Image")));
+            this.pbMapa.Location = new System.Drawing.Point(7, 7);
+            this.pbMapa.Name = "pbMapa";
+            this.pbMapa.Size = new System.Drawing.Size(723, 512);
+            this.pbMapa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbMapa.TabIndex = 0;
+            this.pbMapa.TabStop = false;
+            this.pbMapa.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMapa_Paint);
+            this.pbMapa.Resize += new System.EventHandler(this.pbMapa_Resize);
+            // 
+            // tpArvore
+            // 
+            this.tpArvore.Controls.Add(this.pnlArvore);
+            this.tpArvore.Location = new System.Drawing.Point(4, 22);
+            this.tpArvore.Name = "tpArvore";
+            this.tpArvore.Padding = new System.Windows.Forms.Padding(3);
+            this.tpArvore.Size = new System.Drawing.Size(1080, 593);
+            this.tpArvore.TabIndex = 1;
+            this.tpArvore.Text = "Árvore de Cidades";
+            this.tpArvore.UseVisualStyleBackColor = true;
+            // 
+            // pnlArvore
+            // 
+            this.pnlArvore.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlArvore.Location = new System.Drawing.Point(6, 6);
+            this.pnlArvore.Name = "pnlArvore";
+            this.pnlArvore.Size = new System.Drawing.Size(1067, 578);
+            this.pnlArvore.TabIndex = 0;
+            this.pnlArvore.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlArvore_Paint);
+            // 
+            // dlgAbrir
+            // 
+            this.dlgAbrir.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -386,7 +361,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).EndInit();
             this.tpArvore.ResumeLayout(false);
-            this.tpArvore.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -414,8 +388,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.OpenFileDialog dlgAbrir;
         private System.Windows.Forms.Panel pnlArvore;
-        private System.Windows.Forms.CheckBox chkBalanceada;
-        private System.Windows.Forms.Label lblAltura;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
