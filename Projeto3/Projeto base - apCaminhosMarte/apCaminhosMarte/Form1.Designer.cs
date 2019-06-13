@@ -128,6 +128,7 @@
             this.dgvMelhorCaminho.ReadOnly = true;
             this.dgvMelhorCaminho.Size = new System.Drawing.Size(337, 71);
             this.dgvMelhorCaminho.TabIndex = 10;
+            this.dgvMelhorCaminho.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMelhorCaminho_RowHeaderMouseClick);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -258,9 +259,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(733, 222);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 13);
+            this.label3.Size = new System.Drawing.Size(226, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Caminhos encontrados:";
+            this.label3.Text = "Caminhos encontrados (Selecione o caminho):";
             // 
             // label2
             // 

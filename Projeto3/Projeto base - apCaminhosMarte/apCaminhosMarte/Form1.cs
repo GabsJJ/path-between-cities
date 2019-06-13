@@ -13,7 +13,7 @@ namespace apCaminhosMarte
         Arvore<Cidade> arvore;
         Caminho[,] matAdjacencias;
         PilhaLista<PilhaLista<Caminho>> caminhosDescobertos;
-        PilhaLista<Caminho> caminhoADesenhar;
+        PilhaLista<Caminho> caminhoADesenhar, melhorCaminho;
 
         public Form1()
         {
@@ -22,8 +22,7 @@ namespace apCaminhosMarte
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Buscar caminhos entre cidades selecionadas");
-            BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
+            BuscarCaminhos(dadosCidade[lsbOrigem.SelectedIndex].IdCidade, dadosCidade[lsbDestino.SelectedIndex].IdCidade);
         }
 
         void BuscarCaminhos(int cdOrigem, int cdDestino)
@@ -69,11 +68,75 @@ namespace apCaminhosMarte
                 }
                 while (!achouTodos);
                 ExibirCaminhos(caminhosDescobertos);
+                if (!caminhosDescobertos.EstaVazia())
+                    AcharMelhorCaminho(caminhosDescobertos);
             }
             else
                 if (cdOrigem != -1 && cdDestino != -1)
                 MessageBox.Show("Você já está na cidade!");
 
+        }
+
+        void AcharMelhorCaminho(PilhaLista<PilhaLista<Caminho>> caminhos)
+        {
+            if (!caminhos.EstaVazia())
+            {
+                var copiaAux = caminhos.Copia();
+                int[] distancias = new int[copiaAux.Tamanho()];
+                int i = 0;
+                while (!copiaAux.EstaVazia())
+                {
+                    var caminhoAux = copiaAux.Desempilhar();
+                    int distanciaPercorrida = 0;
+                    while (!caminhoAux.EstaVazia())
+                    {
+                        var cidadeAux = caminhoAux.Desempilhar();
+                        distanciaPercorrida += cidadeAux.Distancia;
+                    }
+                    distancias[i] = distanciaPercorrida;
+                    i++;
+                }
+
+                int menor = distancias[0];
+                int indiceMenor = 0;
+                for (int ii = 0; ii < distancias.Length; ii++)
+                    if (distancias[ii] < menor)
+                    {
+                        menor = distancias[ii];
+                        indiceMenor = ii;
+                    }
+
+                //mostrar no gridView
+                copiaAux = caminhos.Copia();
+                PilhaLista<Caminho> caminhoAtual = null;
+                for (int atual = 0; atual <= indiceMenor; atual++)
+                    caminhoAtual = copiaAux.Desempilhar();
+                
+                ExibirMelhorCaminho(caminhoAtual, indiceMenor);
+            }
+        }
+
+        void ExibirMelhorCaminho(PilhaLista<Caminho> caminho, int cor)
+        {
+            dgvMelhorCaminho.Rows.Clear();
+            dgvMelhorCaminho.RowCount = 1;
+            dgvMelhorCaminho.ColumnCount = 10;
+            var pilhaCopia = caminho.Copia();
+            Caminho caminhoAtual = null;
+            PilhaLista<Caminho> pilhaCopiaAux = new PilhaLista<Caminho>();
+            while (!pilhaCopia.EstaVazia())
+                pilhaCopiaAux.Empilhar(pilhaCopia.Desempilhar());
+
+            corAtual = 2;
+            melhorCaminho = pilhaCopiaAux.Copia();
+            int c = 0;
+            while (!pilhaCopiaAux.EstaVazia())
+            {
+                caminhoAtual = pilhaCopiaAux.Desempilhar();
+                dgvMelhorCaminho.Rows[0].Cells[c].Value = dadosCidade[caminhoAtual.IdCidadeOrigem].NomeCidade;
+                c++;
+            }
+            dgvMelhorCaminho.Rows[0].Cells[c].Value = dadosCidade[caminhoAtual.IdCidadeDestino].NomeCidade;
         }
 
         void ExibirCaminhos(PilhaLista<PilhaLista<Caminho>> caminhos)
@@ -114,9 +177,14 @@ namespace apCaminhosMarte
             caminhoADesenhar = new PilhaLista<Caminho>();
             caminhosDescobertos = new PilhaLista<PilhaLista<Caminho>>();
             arvore = new Arvore<Cidade>();
-            var arq = new StreamReader(@"CidadesMarteOrdenado.txt", Encoding.UTF7);
+            var arq = new StreamReader(@"CidadesMarte.txt", Encoding.UTF7);
             while (!arq.EndOfStream)
-                dadosCidade[qtosDados++] = new Cidade(arq.ReadLine());
+            {
+                var c = new Cidade(arq.ReadLine());
+                dadosCidade[c.IdCidade] = c;
+                qtosDados++;
+            }
+
             arq.Close();
 
             NoArvore<Cidade> primeiroNo = null;
@@ -208,7 +276,8 @@ namespace apCaminhosMarte
                 DesenharPontos(atual.Dir, preenchimento, caneta, g);
             }
         }
-        void DesenharCaminhos(PilhaLista<Caminho> aDesenhar, SolidBrush preenchimento, Pen caneta, Graphics g, int cor)
+
+        void DesenharCaminho(PilhaLista<Caminho> aDesenhar, SolidBrush preenchimento, Pen caneta, Graphics g, int cor)
         {
             int xOrigem = 0;
             int yOrigem = 0;
@@ -229,6 +298,7 @@ namespace apCaminhosMarte
                 g.DrawLine(caneta, xOrigem, yOrigem, xDestino, yDestino);
             }
         }
+
         void pnlArvore_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -243,7 +313,7 @@ namespace apCaminhosMarte
             Pen caneta = new Pen(Color.Black);
             DesenharPontos(arvore.Raiz, preenchimento, caneta, g);
             if (!caminhoADesenhar.EstaVazia())
-                DesenharCaminhos(caminhoADesenhar, preenchimento, caneta, g, corAtual);
+                DesenharCaminho(caminhoADesenhar, preenchimento, caneta, g, corAtual);
         }
 
         private void pbMapa_Resize(object sender, EventArgs e)
@@ -254,6 +324,13 @@ namespace apCaminhosMarte
         private void tabControl1_Click(object sender, EventArgs e)
         {
             BuscarCaminhos(lsbOrigem.SelectedIndex, lsbDestino.SelectedIndex);
+        }
+
+        private void dgvMelhorCaminho_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            caminhoADesenhar = melhorCaminho.Copia();
+            corAtual = 2;
+            pbMapa.Invalidate();
         }
 
         private void dgvCaminhos_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
