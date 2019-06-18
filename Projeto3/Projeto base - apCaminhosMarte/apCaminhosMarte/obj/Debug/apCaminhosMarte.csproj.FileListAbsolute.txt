@@ -48,3 +48,13 @@ C:\Users\u18196\Documents\GitHub\Projeto3ED-CaminhoEntreCidades\Backup\Projeto3\
 C:\Users\u18196\Documents\GitHub\Projeto3ED-CaminhoEntreCidades\Backup\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.CoreCompileInputs.cache
 C:\Users\u18196\Documents\GitHub\Projeto3ED-CaminhoEntreCidades\Backup\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.exe
 C:\Users\u18196\Documents\GitHub\Projeto3ED-CaminhoEntreCidades\Backup\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.pdb
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.exe.config
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.exe
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\bin\Debug\apCaminhosMarte.pdb
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csprojAssemblyReference.cache
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.Form1.resources
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.Properties.Resources.resources
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.GenerateResource.cache
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.csproj.CoreCompileInputs.cache
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.exe
+C:\Users\gabri\Documents\GitHub\CaminhoEntreCidades\Projeto3\Projeto base - apCaminhosMarte\apCaminhosMarte\obj\Debug\apCaminhosMarte.pdb

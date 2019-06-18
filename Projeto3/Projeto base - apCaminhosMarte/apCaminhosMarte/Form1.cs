@@ -111,7 +111,7 @@ namespace apCaminhosMarte
                 PilhaLista<Caminho> caminhoAtual = null;
                 for (int atual = 0; atual <= indiceMenor; atual++)
                     caminhoAtual = copiaAux.Desempilhar();
-                
+
                 ExibirMelhorCaminho(caminhoAtual, indiceMenor);
             }
         }
@@ -283,7 +283,7 @@ namespace apCaminhosMarte
             int yOrigem = 0;
             int xDestino = 0;
             int yDestino = 0;
-            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Purple, Color.Navy, Color.Brown };
+            Color[] cores = { Color.Black, Color.Blue, Color.Red, Color.Green, Color.Orange, Color.Purple, Color.Navy, Color.Brown, Color.Pink };
 
             preenchimento = new SolidBrush(cores[cor]);
             caneta = new Pen(cores[cor], 3);
@@ -329,7 +329,7 @@ namespace apCaminhosMarte
         private void dgvMelhorCaminho_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             caminhoADesenhar = melhorCaminho.Copia();
-            corAtual = 2;
+            corAtual = 8;
             pbMapa.Invalidate();
         }
 
